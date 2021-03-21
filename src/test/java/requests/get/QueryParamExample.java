@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class QueryParamExample {
 	
-	String id="2";
+	//String id="2";
 	
 	@BeforeTest
 	public void setUp() {
@@ -18,14 +18,19 @@ public class QueryParamExample {
 	}
 	
 	@Test
-	public void getUser() {
+	public void createUser() {
 		Response res =
 		given()
-			.pathParam("id",id)
+			.headers("content-type", "application/json")
+			.body("{\n" + 
+					"    \"name\": \"morpheus\",\n" + 
+					"    \"job\": \"leader\"\n" + 
+					"}")
 		.when()
-			.get("/users/{id}");
-		/*then()
-			.statusCode(200);*/
+			.post("/users")
+		.then()
+			.statusCode(201)
+			.extract().response();
 		
 		System.out.println(res.body().asPrettyString());
 	}
