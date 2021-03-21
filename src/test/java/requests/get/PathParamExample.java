@@ -4,12 +4,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test; 
 
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 
-public class QueryParamExample {
-	
-	String id="2";
+public class PathParamExample {
 	
 	@BeforeTest
 	public void setUp() {
@@ -18,16 +16,13 @@ public class QueryParamExample {
 	}
 	
 	@Test
-	public void getUser() {
-		Response res =
+	public void getUsers() {
 		given()
-			.pathParam("id",id)
+			.queryParam("page","x")
 		.when()
-			.get("/users/{id}");
-		/*then()
-			.statusCode(200);*/
-		
-		System.out.println(res.body().asPrettyString());
+			.get("/users")
+		.then()
+			.statusCode(200);
 	}
 
 }
